@@ -1,0 +1,18 @@
+{
+  "name": "JAMMY MUSIC",
+  "short_name": "JAMMY",
+  "description": "Your music, your vibe.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090b0f",
+  "theme_color": "#121820",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
