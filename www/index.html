@@ -220,7 +220,29 @@ audio{width:100%;height:33px;margin-top:5px}
  #results{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 </style>
-</head>
+
+<style id="jammy-liquid-touch">
+.jammy-touch-bubble{
+ position:fixed;z-index:99999;pointer-events:none;
+ width:22px;height:22px;border-radius:50%;
+ transform:translate(-50%,-50%) scale(.2);
+ background:radial-gradient(circle at 30% 25%,
+ rgba(255,255,255,.95),rgba(180,220,255,.42) 35%,
+ rgba(150,100,255,.22) 68%,rgba(255,255,255,.08));
+ border:1px solid rgba(255,255,255,.65);
+ box-shadow:0 0 18px rgba(150,190,255,.35),
+ inset 0 0 9px rgba(255,255,255,.55);
+ backdrop-filter:blur(5px);
+ -webkit-backdrop-filter:blur(5px);
+ animation:jammyBubblePop .55s ease-out forwards;
+}
+@keyframes jammyBubblePop{
+ 0%{opacity:.95;transform:translate(-50%,-50%) scale(.2)}
+ 45%{opacity:.8;transform:translate(-50%,-50%) scale(1.8)}
+ 100%{opacity:0;transform:translate(-50%,-50%) scale(3.3)}
+}
+</style>
+\n</head>
 
 <body>
 <header>
@@ -318,24 +340,48 @@ function quick(name){
 
 async function findMusic(){
  const term=search.value.trim();
- if(!term){message.textContent='Pehle song ya singer ka naam likho.';return}
+ if(!term){
+  message.textContent='Pehle song ya singer ka naam likho.';
+  return;
+ }
  libraryMode=false;
- $('heading').textContent='🎵 Music Bubbles';
+ $('heading').textContent='🌍 Worldwide Music';
  results.innerHTML='';
- message.textContent='Online search ho rahi hai...';
+ message.textContent='Worldwide music search ho rahi hai...';
+
  try{
-  const url='https://itunes.apple.com/search?term='+encodeURIComponent(term)+'&entity=song&limit=30';
+  const url='https://api.audius.co/v1/tracks/search?query='
+   +encodeURIComponent(term)+'&limit=30&app_name=JammyMusic';
+
   const response=await fetch(url);
-  if(!response.ok)throw Error('Search failed');
+  if(!response.ok)throw Error('Music search failed: '+response.status);
+
   const data=await response.json();
-  songs=data.results||[];
+  const tracks=Array.isArray(data.data)?data.data:[];
+
+  songs=tracks.map(t=>({
+   ...t,
+   trackId:t.id,
+   trackName:t.title||'Unknown track',
+   artistName:t.user?.name||'Unknown artist',
+   artworkUrl100:t.artwork?.['150x150']||t.user?.profile_picture?.['150x150']||'',
+   previewUrl:'https://api.audius.co/v1/tracks/'+encodeURIComponent(t.id)+'/stream?app_name=JammyMusic',
+   musicSource:'Audius'
+  }));
+
   current=-1;
   renderSongs(songs);
+
+  if(!songs.length){
+   message.textContent='Is search mein tracks nahi mile. Doosra artist ya song try karo.';
+  }else{
+   message.textContent=songs.length+' tracks mile. Play dabakar suno.';
+  }
  }catch(e){
-  message.textContent='Search fail hui. Internet check karke dobara try karo.';
+  console.error(e);
+  message.textContent='Search nahi ho saki. Internet connection ya music service check karo.';
  }
 }
-
 function renderSongs(list){
  results.innerHTML='';
  if(!list.length){
@@ -406,7 +452,7 @@ function playPreview(song){
  $('ytFrame').style.display='none';
  $('ytFrame').src='about:blank';
  audio.src=song.previewUrl;
- setNow(song.trackName+' — '+song.artistName,'iTunes preview · internet required');
+ setNow(song.trackName+' — '+song.artistName,(song.musicSource||'Online music')+' · internet required');
  audio.play().then(()=>setPlaying(true)).catch(()=>{
   message.textContent='Preview play karne ke liye neeche Play dabao.';
  });
@@ -576,5 +622,26 @@ search.addEventListener('keydown',event=>{
  if(event.key==='Enter')findMusic();
 });
 </script>
-</body>
+
+<script id="jammy-liquid-touch-script">
+(()=>{
+ let last=0;
+ function bubble(x,y){
+  const now=Date.now();
+  if(now-last<45)return;
+  last=now;
+  const b=document.createElement('span');
+  b.className='jammy-touch-bubble';
+  b.style.left=x+'px';
+  b.style.top=y+'px';
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),600);
+ }
+ document.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='mouse' && e.button!==0)return;
+  bubble(e.clientX,e.clientY);
+ },{passive:true});
+})();
+</script>
+\n</body>
 </html>
