@@ -242,7 +242,122 @@ audio{width:100%;height:33px;margin-top:5px}
  100%{opacity:0;transform:translate(-50%,-50%) scale(3.3)}
 }
 </style>
-\n</head>
+\n
+<style id="jammy-premium-redesign">
+/* JAMMY PREMIUM REDESIGN */
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:#080a09}
+body{
+ margin:0!important;padding:0 0 105px!important;
+ background:linear-gradient(180deg,#17271e 0,#101510 260px,#080a09 560px)!important;
+ color:#f7f8f7!important;font-family:Arial,Helvetica,sans-serif!important;
+}
+header{
+ display:flex!important;justify-content:space-between;align-items:center;
+ gap:12px;padding:24px 18px 18px!important;
+ background:transparent!important;border:0!important;
+}
+.logo{font-size:22px!important;font-weight:900!important;letter-spacing:-1px;color:#fff!important}
+.tag{font-size:9px!important;letter-spacing:1px;color:#b8c8bc!important;text-align:right}
+main{padding:0 16px!important;max-width:850px;margin:auto}
+.hero{
+ padding:22px 0 18px!important;background:transparent!important;
+ border:0!important;box-shadow:none!important;border-radius:0!important;
+}
+.hero .badge{
+ display:inline-block;padding:7px 11px;border-radius:30px;
+ background:#233d2b;color:#c6ffcf;font-size:10px;letter-spacing:1px;
+}
+.hero h1{font-size:clamp(30px,8vw,45px)!important;line-height:1.08;
+ letter-spacing:-1.8px;margin:18px 0 10px!important;font-weight:900}
+.hero p,.muted{color:#b6bcb7!important;line-height:1.55;font-size:13px}
+h2{font-size:20px!important;letter-spacing:-.5px;margin:25px 0 14px!important}
+.chips{
+ display:flex!important;gap:8px!important;overflow-x:auto!important;
+ flex-wrap:nowrap!important;padding:2px 0 10px!important;
+ scrollbar-width:none
+}
+.chips::-webkit-scrollbar{display:none}
+.chips button{
+ flex:0 0 auto!important;width:auto!important;border-radius:25px!important;
+ background:#252a26!important;color:#f4f5f4!important;
+ border:1px solid #343a35!important;padding:10px 15px!important;
+ font-size:12px!important
+}
+.panel{
+ margin:22px 0!important;padding:18px!important;
+ border:1px solid #343b35!important;border-radius:18px!important;
+ background:rgba(25,29,26,.88)!important;box-shadow:none!important;
+}
+.panel h2{margin-top:0!important}
+input{
+ width:100%!important;min-height:48px!important;padding:14px!important;
+ border-radius:10px!important;border:1px solid #454c46!important;
+ background:#292e2a!important;color:#fff!important;font-size:14px!important;
+ margin:6px 0 10px!important;outline:none
+}
+input:focus{border-color:#1ed760!important}
+button{
+ cursor:pointer!important;transition:transform .15s,filter .15s!important;
+ font-weight:700!important
+}
+button:active{transform:scale(.96)!important;filter:brightness(1.15)}
+button.green,.green{
+ background:#1ed760!important;color:#07150b!important;
+ border:0!important;border-radius:25px!important;padding:13px 18px!important
+}
+button.pink,.pink{
+ background:#343a35!important;color:#fff!important;
+ border:1px solid #4a514b!important;border-radius:25px!important;padding:12px 16px!important
+}
+button.secondary,.secondary{
+ background:#292e2a!important;color:#f4f4f4!important;
+ border:1px solid #454b46!important;border-radius:25px!important;padding:12px 16px!important
+}
+#message,#ytStatus{font-size:12px!important;color:#b6c0b8!important;padding:10px 0}
+#results{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:13px!important;align-items:start
+}
+#results .card{
+ min-width:0!important;padding:11px!important;margin:0!important;
+ border-radius:15px!important;background:#171b18!important;
+ border:1px solid #292f2a!important;box-shadow:none!important;
+ overflow:hidden
+}
+#results .card img{
+ display:block!important;width:100%!important;aspect-ratio:1/1!important;
+ object-fit:cover!important;border-radius:10px!important;margin-bottom:10px!important
+}
+#results .card p{
+ color:#fff!important;font-size:14px!important;font-weight:700!important;
+ line-height:1.35!important;margin:5px 0!important;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+#results .card small{display:block;color:#aeb7b0!important;margin:5px 0 10px!important}
+#results .card button{width:100%!important;margin:4px 0!important;font-size:11px!important}
+#results .card button.favOn{color:#1ed760!important}
+iframe#ytFrame{
+ width:100%!important;max-width:100%!important;border:0!important;
+ border-radius:14px!important;background:#000!important
+}
+#ytFrame[style*="display: none"]{display:none!important}
+@media(min-width:600px){
+ #results{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .hero h1{font-size:48px!important}
+}
+@media(max-width:360px){
+ main{padding:0 12px!important}
+ #results{gap:9px!important}
+ #results .card{padding:8px!important}
+ header{padding:20px 12px 14px!important}
+ .logo{font-size:19px!important}
+}
+/* END JAMMY PREMIUM REDESIGN */
+</style>
+
+</head>
 
 <body>
 <header>
