@@ -2,579 +2,86 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#090914">
-<title>JAMMY MUSIC</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>MUSIC WITH JAMMY</title>
 <style>
 *{box-sizing:border-box}
-:root{
- --bg:#090914;
- --panel:#151526;
- --purple:#9b5cff;
- --pink:#ff4fc8;
- --blue:#4ddcff;
- --green:#65ffb1;
- --muted:#aaaac4;
-}
-body{
- margin:0;
- padding:0 0 150px;
- color:white;
- background:
- radial-gradient(ellipse at 10% 0%,#34205c 0,transparent 36%),
- radial-gradient(ellipse at 100% 30%,#132d50 0,transparent 30%),
- var(--bg);
- font-family:Arial,sans-serif;
- min-height:100vh;
-}
-header{
- position:sticky;
- top:0;
- z-index:10;
- padding:17px 18px;
- background:#0c0b18eF;
- backdrop-filter:blur(18px);
- border-bottom:1px solid #ffffff12;
-}
-.logo{
- font-size:24px;
- font-weight:900;
- letter-spacing:1px;
- background:linear-gradient(90deg,var(--green),var(--blue),var(--pink));
- -webkit-background-clip:text;
- background-clip:text;
- color:transparent;
-}
-.tag{font-size:11px;color:var(--muted);margin-top:5px}
-main{padding:18px;max-width:750px;margin:auto}
-.hero{
- position:relative;
- overflow:hidden;
- padding:23px;
- border-radius:28px;
- background:linear-gradient(135deg,#7437bd,#263d8c 55%,#123e58);
- border:1px solid #ffffff26;
- box-shadow:0 12px 35px #5826a533;
-}
-.hero:after{
- content:"♫";
- position:absolute;
- right:10px;
- bottom:-35px;
- font-size:145px;
- color:#ffffff15;
- transform:rotate(-12deg);
-}
-.hero h1{font-size:27px;margin:0 0 9px;position:relative;z-index:1}
-.hero p{font-size:13px;color:#e4d9ff;line-height:1.6;position:relative;z-index:1}
-.badge{
- display:inline-block;
- padding:7px 12px;
- border-radius:30px;
- background:#ffffff20;
- font-size:11px;
-}
-h2{font-size:17px;margin:27px 0 13px}
-h3{font-size:14px;margin:10px 0}
-.muted{color:var(--muted);font-size:12px;line-height:1.6}
-input{
- width:100%;
- min-width:0;
- border:1px solid #ffffff1c;
- outline:none;
- border-radius:18px;
- padding:14px;
- margin:7px 0;
- color:white;
- background:#17172a;
- font-size:14px;
-}
-input:focus{border-color:var(--purple)}
-button{
- border:1px solid #ffffff15;
- border-radius:24px;
- padding:12px 15px;
- color:white;
- background:linear-gradient(135deg,#864cff,#c44cff);
- font-weight:bold;
- font-size:12px;
- cursor:pointer;
- margin:4px 2px;
-}
-button:active{transform:scale(.96)}
-button.secondary{background:#24243a}
-button.green{background:linear-gradient(135deg,#39e9a0,#25a8d7);color:#08121a}
-button.pink{background:linear-gradient(135deg,#ff4f9a,#a849ff)}
-button:disabled{opacity:.45}
-.row{display:flex;gap:7px;align-items:center}
-.row input{flex:1;width:0}
-.row button{white-space:nowrap}
-.chips{display:flex;gap:7px;overflow-x:auto;padding:4px 0 10px}
-.chips button{white-space:nowrap;flex-shrink:0}
-.panel{
- background:linear-gradient(145deg,#19182d,#101321);
- border:1px solid #ffffff14;
- border-radius:25px;
- padding:16px;
- margin-top:14px;
- box-shadow:0 10px 30px #0002;
-}
-#results{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:13px;
- margin-top:14px;
-}
-.card{
- min-width:0;
- padding:11px;
- border-radius:25px;
- background:linear-gradient(155deg,#27213f,#151827 70%);
- border:1px solid #ffffff16;
- box-shadow:0 8px 24px #0003;
- animation:rise .35s ease both;
-}
-.card:nth-child(3n+1){border-radius:30px 30px 20px 30px}
-.card:nth-child(3n+2){border-radius:30px 24px 30px 18px}
-.card img{
- display:block;
- width:100%;
- aspect-ratio:1;
- object-fit:cover;
- border-radius:20px;
- background:#24243b;
-}
-.card p{
- font-size:13px;
- font-weight:bold;
- line-height:1.4;
- margin:10px 0 5px;
- overflow-wrap:anywhere;
-}
-.card small{
- display:block;
- color:var(--muted);
- font-size:11px;
- min-height:28px;
- line-height:1.4;
- overflow-wrap:anywhere;
-}
-.card button{width:100%;margin:4px 0;padding:10px 5px}
-#message{font-size:12px;color:var(--muted);line-height:1.6;margin:13px 0}
-#ytFrame{
- display:none;
- width:100%;
- aspect-ratio:16/9;
- border:0;
- border-radius:22px;
- background:#000;
- margin-top:12px;
-}
-#localList{display:grid;gap:8px;margin-top:12px}
-.localSong{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- padding:12px;
- background:#ffffff08;
- border:1px solid #ffffff12;
- border-radius:17px;
-}
-.localSong div{min-width:0;overflow-wrap:anywhere;font-size:12px}
-.localSong button{flex-shrink:0}
-#ytStatus{font-size:12px;color:var(--muted);line-height:1.6}
-.player{
- position:fixed;
- z-index:20;
- bottom:0;
- left:0;
- right:0;
- padding:12px 15px calc(12px + env(safe-area-inset-bottom));
- background:#10101ded;
- backdrop-filter:blur(22px);
- border-top:1px solid #ffffff1c;
- box-shadow:0 -8px 35px #0005;
-}
-.playerTop{display:flex;align-items:center;gap:11px;margin-bottom:9px}
-.disc{
- width:42px;height:42px;flex-shrink:0;
- display:grid;place-items:center;
- border-radius:50%;
- background:linear-gradient(135deg,var(--pink),var(--purple),var(--blue));
- box-shadow:0 0 20px #a04cff44;
- animation:spin 8s linear infinite;
-}
-.disc.paused{animation-play-state:paused}
-#now{font-size:12px;font-weight:bold;line-height:1.4}
-#source{font-size:10px;color:var(--muted);margin-top:3px}
-.controls{display:flex;align-items:center;justify-content:center;gap:7px}
-.controls button{margin:0;padding:10px 13px}
-#playBtn{min-width:100px}
-audio{width:100%;height:33px;margin-top:5px}
-.favOn{color:#ff78c8}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(min-width:560px){
- #results{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
+body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif;padding-bottom:100px}
+header{padding:24px 18px;display:flex;align-items:center;gap:12px}
+.logo{background:#1ed760;color:#071008;width:45px;height:45px;border-radius:50%;display:grid;place-items:center;font-size:28px}
+.brand{font-weight:900;letter-spacing:1px}
+h2{font-size:23px;margin:25px 18px 15px}
+.categories{display:flex;gap:9px;padding:0 18px;overflow:auto}
+.pill{background:#252525;padding:11px 18px;border-radius:30px;white-space:nowrap;font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px}
+.tile{background:#242424;border-radius:6px;display:flex;align-items:center;gap:10px;overflow:hidden;font-weight:bold;font-size:13px}
+.tile img{width:65px;height:65px;object-fit:cover}
+.cards{display:flex;gap:15px;overflow:auto;padding:0 18px}
+.card{min-width:145px;width:145px}
+.card img{width:145px;height:145px;object-fit:cover;border-radius:8px}
+.card p{color:#aaa;font-size:12px}
+.search{margin:0 18px;background:white;color:black;border-radius:8px;padding:14px}
+.search input{border:0;outline:0;width:100%;font-size:15px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#101010;display:flex;justify-content:space-around;padding:14px 5px 20px}
+nav div{text-align:center;color:#aaa;font-size:11px}
+nav b{display:block;font-size:22px;margin-bottom:4px}
+.active{color:#1ed760}
+.player{position:fixed;bottom:68px;left:8px;right:8px;background:#292929;border-radius:8px;padding:12px;display:flex;justify-content:space-between}
 </style>
 </head>
-
 <body>
 <header>
- <div class="logo">🫧 JAMMY MUSIC</div>
- <div class="tag">YOUR SOUND. YOUR WORLD. ✦</div>
+<div class="logo">♫</div>
+<div class="brand">MUSIC WITH JAMMY</div>
 </header>
 
-<main>
- <section class="hero">
-  <span class="badge">✦ BUBBLE EDITION</span>
-  <h1>Feel every beat. 🎧</h1>
-  <p>Your music, your mood. Search tracks, play YouTube videos and listen to music files from your phone.</p>
- </section>
-
- <h2>🌈 Quick Vibes</h2>
- <div class="chips">
-  <button onclick="quick('Talha Anjum')">🎤 Talha Anjum</button>
-  <button onclick="quick('Talha Yunus')">🔥 Talha Yunus</button>
-  <button onclick="quick('Atif Aslam')">💚 Atif Aslam</button>
-  <button onclick="quick('Hasan Raheem')">🌙 Hasan Raheem</button>
-  <button onclick="quick('Young Stunners')">⚡ Young Stunners</button>
- </div>
-
- <section class="panel">
-  <h2 style="margin-top:0">🔎 Discover Music</h2>
-  <input id="search" placeholder="Song ya singer ka naam likho...">
-  <button class="green" onclick="findMusic()">Search Music</button>
-  <button class="secondary" onclick="showFavourites()">❤️ My Library</button>
-  <div id="message">Apna favourite artist search karo!</div>
- </section>
-
- <h2 id="heading">🎵 Music Bubbles</h2>
- <div id="results"></div>
-
- <section class="panel">
-  <h2 style="margin-top:0">▶️ YouTube Player</h2>
-  <p class="muted">YouTube song/video ka link paste karo. Video yahin play hoga, agar embedding allowed ho.</p>
-  <input id="ytUrl" placeholder="YouTube video URL paste karo...">
-  <button onclick="playYouTube()" class="pink">▶ Play YouTube</button>
-  <div id="ytStatus">YouTube link abhi select nahi hua.</div>
-  <iframe id="ytFrame"
-   title="YouTube music player"
-   allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-   allowfullscreen
-   referrerpolicy="strict-origin-when-cross-origin"></iframe>
- </section>
-
- <section class="panel">
-  <h2 style="margin-top:0">📂 Play Phone MP3</h2>
-  <p class="muted">Apne phone se audio files select karo. Multiple files bhi select kar sakte ho.</p>
-  <input id="filePicker" type="file" accept="audio/*,.mp3,.m4a,.aac,.wav,.ogg" multiple>
-  <div id="localList"></div>
- </section>
-</main>
-
-<div class="player">
- <div class="playerTop">
-  <div class="disc" id="disc">♫</div>
-  <div style="min-width:0;flex:1">
-   <div id="now">JAMMY MUSIC — Select a song</div>
-   <div id="source">Ready to play</div>
-  </div>
- </div>
- <div class="controls">
-  <button class="secondary" onclick="previousSong()">⏮</button>
-  <button id="playBtn" onclick="togglePlay()">▶ Play</button>
-  <button class="secondary" onclick="nextSong()">⏭</button>
- </div>
- <audio id="audio" controls preload="metadata"></audio>
+<div class="categories">
+<div class="pill">All</div>
+<div class="pill">Music</div>
+<div class="pill">Podcasts</div>
+<div class="pill">Videos</div>
 </div>
 
-<script>
-const $=id=>document.getElementById(id);
-const search=$('search');
-const results=$('results');
-const message=$('message');
-const audio=$('audio');
-let songs=[];
-let current=-1;
-let libraryMode=false;
-let localFiles=[];
-let localIndex=-1;
-let activeMode='none';
-let favourites=[];
+<h2>Good evening 👋</h2>
+<div class="grid">
+<div class="tile">❤️ Liked Songs</div>
+<div class="tile">🔥 Top Hits</div>
+<div class="tile">🎧 Daily Mix</div>
+<div class="tile">✨ Discover</div>
+</div>
 
-try{
- favourites=JSON.parse(localStorage.getItem('jammyFavs')||'[]');
- if(!Array.isArray(favourites))favourites=[];
-}catch(e){favourites=[]}
+<h2>Made For You</h2>
+<div class="cards">
+<div class="card">
+<img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=300">
+<b>Daily Vibes</b><p>Your daily music mix</p>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300">
+<b>Top Hits</b><p>Popular music</p>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300">
+<b>Chill Mix</b><p>Relax and enjoy</p>
+</div>
+</div>
 
-function quick(name){
- search.value=name;
- findMusic();
-}
+<h2>Discover Music</h2>
+<div class="search">
+<input type="search" placeholder="Search songs and artists...">
+</div>
 
-async function findMusic(){
- const term=search.value.trim();
- if(!term){message.textContent='Pehle song ya singer ka naam likho.';return}
- libraryMode=false;
- $('heading').textContent='🎵 Music Bubbles';
- results.innerHTML='';
- message.textContent='Online search ho rahi hai...';
- try{
-  const url='https://itunes.apple.com/search?term='+encodeURIComponent(term)+'&entity=song&limit=30';
-  const response=await fetch(url);
-  if(!response.ok)throw Error('Search failed');
-  const data=await response.json();
-  songs=data.results||[];
-  current=-1;
-  renderSongs(songs);
- }catch(e){
-  message.textContent='Search fail hui. Internet check karke dobara try karo.';
- }
-}
+<div class="player">
+<span>♫ &nbsp; MUSIC WITH JAMMY</span>
+<span>▶</span>
+</div>
 
-function renderSongs(list){
- results.innerHTML='';
- if(!list.length){
-  message.textContent='Koi song nahi mila.';
-  return;
- }
- message.textContent=list.length+' results mile. iTunes tracks aksar sirf short previews dete hain.';
- list.forEach(song=>{
-  const card=document.createElement('article');
-  card.className='card';
-
-  const img=document.createElement('img');
-  img.loading='lazy';
-  img.src=(song.artworkUrl100||'').replace('100x100','300x300');
-  img.alt='Album cover';
-
-  const title=document.createElement('p');
-  title.textContent=song.trackName||'Unknown song';
-
-  const artist=document.createElement('small');
-  artist.textContent=song.artistName||'Unknown artist';
-
-  const play=document.createElement('button');
-  play.textContent=song.previewUrl?'▶ Play Preview':'Preview unavailable';
-  play.disabled=!song.previewUrl;
-  play.onclick=()=>playPreview(song);
-
-  const yt=document.createElement('button');
-  yt.className='secondary';
-  yt.textContent='▶ YouTube Link';
-  yt.onclick=()=>{
-   $('ytUrl').value='https://www.youtube.com/results?search_query='+
-    encodeURIComponent((song.trackName||'')+' '+(song.artistName||''));
-   $('ytStatus').textContent='Ab search link khol kar song choose karo; video URL paste karna hoga.';
-   $('ytUrl').scrollIntoView({behavior:'smooth',block:'center'});
-  };
-
-  const fav=document.createElement('button');
-  fav.className='secondary';
-  const isFav=favourites.some(x=>x.trackId===song.trackId);
-  fav.textContent=isFav?'♥ Saved':'♡ Favourite';
-  if(isFav)fav.classList.add('favOn');
-  fav.onclick=()=>toggleFavourite(song);
-
-  card.append(img,title,artist,play,yt,fav);
-  results.appendChild(card);
- });
-}
-
-function setNow(title,source){
- $('now').textContent=title||'JAMMY MUSIC';
- $('source').textContent=source||'Ready to play';
-}
-
-function setPlaying(playing){
- $('playBtn').textContent=playing?'⏸ Pause':'▶ Play';
- $('disc').classList.toggle('paused',!playing);
-}
-
-function playPreview(song){
- if(!song.previewUrl){
-  message.textContent='Is track ka preview available nahi.';
-  return;
- }
- activeMode='preview';
- current=songs.findIndex(x=>x.trackId===song.trackId);
- localIndex=-1;
- $('ytFrame').style.display='none';
- $('ytFrame').src='about:blank';
- audio.src=song.previewUrl;
- setNow(song.trackName+' — '+song.artistName,'iTunes preview · internet required');
- audio.play().then(()=>setPlaying(true)).catch(()=>{
-  message.textContent='Preview play karne ke liye neeche Play dabao.';
- });
-}
-
-function togglePlay(){
- if(activeMode==='youtube'){
-  message.textContent='YouTube ke play/pause controls video player ke andar hain.';
-  $('ytFrame').scrollIntoView({behavior:'smooth',block:'center'});
-  return;
- }
- if(!audio.src){
-  message.textContent='Pehle YouTube link ya audio file select karo.';
-  return;
- }
- if(audio.paused){
-  audio.play().then(()=>setPlaying(true)).catch(()=>{});
- }else{
-  audio.pause();
-  setPlaying(false);
- }
-}
-
-function nextSong(){
- if(activeMode==='local'){
-  if(localIndex+1<localFiles.length)playLocal(localIndex+1);
-  else message.textContent='Playlist ka aakhri song hai.';
-  return;
- }
- if(!songs.length)return;
- for(let n=1;n<=songs.length;n++){
-  const i=(Math.max(current,-1)+n)%songs.length;
-  if(songs[i].previewUrl){playPreview(songs[i]);return}
- }
- message.textContent='Koi preview available nahi.';
-}
-
-function previousSong(){
- if(activeMode==='local'){
-  if(localIndex>0)playLocal(localIndex-1);
-  else message.textContent='Playlist ka pehla song hai.';
-  return;
- }
- if(!songs.length)return;
- for(let n=1;n<=songs.length;n++){
-  const i=(Math.max(current,0)-n+songs.length)%songs.length;
-  if(songs[i].previewUrl){playPreview(songs[i]);return}
- }
-}
-
-function toggleFavourite(song){
- const index=favourites.findIndex(x=>x.trackId===song.trackId);
- if(index>=0)favourites.splice(index,1);
- else favourites.push(song);
- try{localStorage.setItem('jammyFavs',JSON.stringify(favourites))}catch(e){}
- if(libraryMode)showFavourites();
- else renderSongs(songs);
-}
-
-function showFavourites(){
- libraryMode=true;
- $('heading').textContent='❤️ My Library';
- renderSongs(favourites);
- if(!favourites.length)message.textContent='Abhi favourites save nahi kiye.';
-}
-
-$('filePicker').addEventListener('change',event=>{
- const files=Array.from(event.target.files||[]);
- if(!files.length)return;
-
- localFiles=files.filter(file=>file.type.startsWith('audio/')||
-  /\.(mp3|m4a|aac|wav|ogg|flac)$/i.test(file.name));
-
- localIndex=-1;
- $('localList').innerHTML='';
-
- localFiles.forEach((file,index)=>{
-  const row=document.createElement('div');
-  row.className='localSong';
-
-  const name=document.createElement('div');
-  name.textContent='🎵 '+file.name;
-
-  const play=document.createElement('button');
-  play.className='green';
-  play.textContent='▶ Play';
-  play.onclick=()=>playLocal(index);
-
-  row.append(name,play);
-  $('localList').appendChild(row);
- });
-
- message.textContent=localFiles.length+' local audio files ready.';
- if(localFiles.length)playLocal(0);
-});
-
-function playLocal(index){
- if(index<0||index>=localFiles.length)return;
- localIndex=index;
- current=-1;
- activeMode='local';
-
- const file=localFiles[index];
- $('ytFrame').style.display='none';
- $('ytFrame').src='about:blank';
-
- if(audio.src.startsWith('blob:'))URL.revokeObjectURL(audio.src);
- audio.src=URL.createObjectURL(file);
- setNow(file.name,'Phone audio · local file');
- audio.play().then(()=>setPlaying(true)).catch(()=>setPlaying(false));
-}
-
-function getYouTubeId(value){
- try{
-  const url=new URL(value);
-  if(url.hostname==='youtu.be'||url.hostname.endsWith('.youtu.be')){
-   return url.pathname.split('/').filter(Boolean)[0]||null;
-  }
-  if(url.hostname==='youtube.com'||url.hostname.endsWith('.youtube.com')||
-     url.hostname==='youtube-nocookie.com'||url.hostname.endsWith('.youtube-nocookie.com')){
-   if(url.pathname==='/watch')return url.searchParams.get('v');
-   const parts=url.pathname.split('/').filter(Boolean);
-   if(['embed','shorts','live','v'].includes(parts[0]))return parts[1]||null;
-  }
- }catch(e){}
- return null;
-}
-
-function playYouTube(){
- const value=$('ytUrl').value.trim();
- if(!value){
-  $('ytStatus').textContent='Pehle YouTube video ka link paste karo.';
-  return;
- }
-
- const id=getYouTubeId(value);
- if(!id){
-  $('ytStatus').textContent='Valid YouTube VIDEO URL paste karo, jaise youtube.com/watch?v=...';
-  return;
- }
-
- activeMode='youtube';
- current=-1;
- localIndex=-1;
-
- if(audio.src)audio.pause();
- setPlaying(false);
-
- $('ytFrame').src='https://www.youtube-nocookie.com/embed/'+
-  encodeURIComponent(id)+'?playsinline=1&rel=0';
- $('ytFrame').style.display='block';
-
- setNow('YouTube video','Playback controls video ke andar');
- $('ytStatus').textContent='Video load ho raha hai. Agar unavailable ho, YouTube app/site mein kholo.';
- $('ytFrame').scrollIntoView({behavior:'smooth',block:'center'});
-}
-
-audio.addEventListener('play',()=>setPlaying(true));
-audio.addEventListener('pause',()=>setPlaying(false));
-audio.addEventListener('ended',()=>{
- if(activeMode==='local'&&localIndex+1<localFiles.length)playLocal(localIndex+1);
- else if(activeMode==='preview')nextSong();
- else setPlaying(false);
-});
-
-search.addEventListener('keydown',event=>{
- if(event.key==='Enter')findMusic();
-});
-</script>
+<nav>
+<div class="active"><b>⌂</b>Home</div>
+<div><b>⌕</b>Search</div>
+<div><b>▤</b>Library</div>
+<div><b>◉</b>Profile</div>
+</nav>
 </body>
 </html>
